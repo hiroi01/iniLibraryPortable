@@ -1,6 +1,6 @@
 /*
  
- INI Library Portable by hiroi01 ver. 1.00
+ INI Library Portable ver. 1.01   by hiroi01
  
  thanks to
  mp3play by plum 
@@ -8,8 +8,8 @@
  bright.prx by plum
  and
  iso tool by takka
-
-*/
+ 
+ */
 
 #include <pspkernel.h>
 #include <pspctrl.h>
@@ -70,7 +70,7 @@ char *ILPGetStringFormatValueByKeynumber(ILP_Key *key, char *rtn, int keynumber)
 	char **listPtr;
 	switch (key[keynumber].type) {
 		case ILP_TYPE_BUTTON:
-			ILPGetButtonNameByKey(rtn, &key[keynumber]);
+			ILPGetButtonNameByKey(rtn, key + keynumber);
 			break;
 		case ILP_TYPE_BOOL:
 			strcpy(rtn, *(bool *)key[keynumber].value?"true":"false");
@@ -198,6 +198,7 @@ inline char* ILPGetButtonNameByKey(char *rtn, ILP_Key *key)
 
 void ILPGetButton(u32 *rtn, const char *str, u32 defaultValue, ILP_Button_Info *info)
 {
+
 	char buf[256];
 	char *next;
 	char *current;
@@ -492,12 +493,9 @@ void ILPRegisterButton(ILP_Key *key, char *keyName,  u32 *value, u32 defaultValu
 	
 	key[keyNum].ex = (void *)buttonInfo;
 
-#ifndef ILP_NOUSE_DEFAULT_BUTTON_INFO
-	if( buttonInfo == NULL )
-		key[keyNum].ex = (void *)defaultButtonInfo;
-	else
-#endif
-	key[keyNum].ex = (void *)buttonInfo;
+	
+	//左辺をセット
+	key[keyNum].name = keyName;
 
 	key[0].buf = keyNum + 1;
 }

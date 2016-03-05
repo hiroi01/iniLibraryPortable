@@ -1,6 +1,6 @@
 /*
  
- INI Library Portable by hiroi01 ver. 1.00
+ INI Library Portable ver. 1.01   by hiroi01
  
  thanks to
  mp3play by plum 
