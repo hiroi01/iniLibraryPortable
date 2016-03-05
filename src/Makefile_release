@@ -1,14 +1,16 @@
 
 all:
 	make clean
-	make -f Makefile_p
+	rm -rf ../lib
+	mkdir ../lib
+	make -f Makefile
 	cp -f libinip.a ../lib
 	make clean
-	make -f Makefile_p LITE=1
+	make -f Makefile LITE=1
 	cp -f libiniplite.a ../lib
 	make clean
 
 clean:
-	make -f Makefile_p clean
-	make -f Makefile_p LITE=1 clean
+	make -f Makefile clean
+	make -f Makefile LITE=1 clean
 
