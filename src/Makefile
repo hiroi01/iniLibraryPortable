@@ -1,14 +1,24 @@
 
-all:
-	make clean
-	make -f Makefile_p
-	cp -f libinip.a ../lib
-	make clean
-	make -f Makefile_p LITE=1
-	cp -f libiniplite.a ../lib
-	make clean
+ifeq ($(LITE), 1)
+TARGET_LIB = libiniplite.a
+else
+TARGET_LIB = libinip.a
+endif
 
-clean:
-	make -f Makefile_p clean
-	make -f Makefile_p LITE=1 clean
+OBJS = conf.o utils.o
 
+
+INCDIR = ../include
+CFLAGS = -O2 -G0 -Wall
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti
+ASFLAGS = $(CFLAGS)
+
+ifeq ($(LITE), 1)
+CFLAGS += -DILP_NOUSE_DEFAULT_BUTTON_INFO
+endif
+
+LIBDIR =
+LDFLAGS =
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
